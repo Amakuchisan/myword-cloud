@@ -17,6 +17,8 @@ RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git \
 
 # 環境変数にはてなIDをセット
 ENV HATENAID sample
+# 環境変数にフォントのファイル名をセット
+ENV FONTFILE NotoSansCJKjp-Regular.otf
 COPY . .
 
 # ユーザ辞書の追加

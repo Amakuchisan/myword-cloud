@@ -5,7 +5,7 @@ from wordcloud import WordCloud
 
 #ワードクラウドの作成
 def create_wordcloud(titles):
-    fontpath = '/work/.fonts/NotoSansCJKjp-Regular.otf'
+    fontpath = '/work/.fonts/' + os.environ['FONTFILE']
     stop_words = ['Qiita', 'note', 'Speaker Deck', 'まとめ', 'コリス', 'blog']
 
     tagger = MeCab.Tagger(
