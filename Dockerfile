@@ -1,7 +1,7 @@
 FROM python:3.9-slim
 
 WORKDIR /work
-COPY requirements.txt requirements.txt
+COPY requirements.txt .
 
 RUN pip install -U pip \
     && pip install -r requirements.txt
@@ -19,7 +19,9 @@ RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git \
 ENV HATENAID sample
 # 環境変数にフォントのファイル名をセット
 ENV FONTFILE NotoSansCJKjp-Regular.otf
-COPY . .
+
+COPY .fonts .fonts
+COPY userdic userdic
 
 # ユーザ辞書の追加
 RUN /usr/lib/mecab/mecab-dict-index \
@@ -27,5 +29,7 @@ RUN /usr/lib/mecab/mecab-dict-index \
     -u /work/userdic/myDic.dic \
     -f utf-8 -t utf-8 /work/userdic/myDic.csv \
     && echo userdic = /work/userdic/myDic.dic >> /usr/local/etc/mecabrc
+
+COPY src src
 
 CMD ["python", "src/main.py"]
