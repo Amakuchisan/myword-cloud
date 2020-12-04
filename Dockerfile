@@ -1,12 +1,10 @@
-FROM python:3.9.0
+FROM python:3.9-slim
 
 WORKDIR /work
 COPY requirements.txt requirements.txt
 
 RUN pip install -U pip \
     && pip install -r requirements.txt
-# RUN pip install -U pip\
-#     && pip install fastprogress japanize-matplotlib
 
 # mecabとmecab-ipadic-NEologdの導入
 RUN apt-get update \
@@ -21,4 +19,11 @@ RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git \
 ENV HATENAID CNaan
 COPY . .
 
-CMD ["python", "bookmark.py"]
+# ユーザ辞書の追加
+RUN /usr/lib/mecab/mecab-dict-index \
+    -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd \
+    -u /work/userdic/myDic.dic \
+    -f utf-8 -t utf-8 /work/userdic/myDic.csv \
+    && echo userdic = /work/userdic/myDic.dic >> /usr/local/etc/mecabrc
+
+CMD ["python", "src/main.py"]
