@@ -16,7 +16,7 @@ RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git \
     && ln -s /etc/mecabrc /usr/local/etc/mecabrc
 
 # 環境変数にはてなIDをセット
-ENV HATENAID CNaan
+ENV HATENAID sample
 COPY . .
 
 # ユーザ辞書の追加
