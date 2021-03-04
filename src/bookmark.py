@@ -13,7 +13,7 @@ class Bookmark:
         d = feedparser.parse('https://b.hatena.ne.jp/{}/rss'.format(self.hatena_id))
         content = d['feed']['subtitle'] # 'Userのはてなブックマーク (num)'
         match = re.search(r"(はてなブックマーク \()(.*?)\)", content)
-        num = match.group(2) # 公開しているブックマーク数
+        num = match.group(2).replace(',', '') # 公開しているブックマーク数
         if not num.isdecimal():
             print('Error: num is string', file=sys.stderr)
             return 0
